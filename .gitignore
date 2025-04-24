@@ -8,3 +8,4 @@ F5-TTS/src/f5_tts.egg-info/
 tests/outputs_v2c_l44_test/
 tests/outputs_v2a_l44_test/
 tests/outputs_tts/
+.cog/

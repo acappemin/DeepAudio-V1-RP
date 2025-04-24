@@ -40,6 +40,12 @@ if True:
     print(f"Model saved at: {file_path}")
 
 
+try:
+    import f5-tts
+except ImportError:
+    os.system("cd ./F5-TTS && pip install -e .")
+
+
 import sys
 sys.path.insert(0, "./MMAudio/")
 from demo import v2a_load, v2a_infer
