@@ -46,6 +46,9 @@ def download():
     print(f"Model saved at: {file_path}")
 
 
+import haha
+
+
 import sys
 sys.path.insert(0, "./MMAudio/")
 from demo import v2a_load, v2a_infer
