@@ -13,6 +13,9 @@ import numpy as np
 
 from huggingface_hub import hf_hub_download
 
+import os
+
+
 if True:
     model_path = "./MMAudio/weights/"
     
