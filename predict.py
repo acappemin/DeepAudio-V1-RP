@@ -19,7 +19,7 @@ import numpy as np
 from huggingface_hub import hf_hub_download
 
 
-if True:
+def download():
     model_path = "./MMAudio/weights/"
     
     file_path = hf_hub_download(repo_id="lshzhm/DeepAudio-V1", filename="MMAudio/mmaudio_small_44k.pth", local_dir=model_path)
@@ -50,7 +50,7 @@ import sys
 sys.path.insert(0, "./MMAudio/")
 from demo import v2a_load, v2a_infer
 
-v2a_loaded = v2a_load()
+#v2a_loaded = v2a_load()
 
 
 import sys
@@ -58,7 +58,7 @@ sys.path.insert(0, "./F5-TTS/src/")
 from f5_tts.infer.infer_cli_test import v2s_infer
 
 
-def video_to_audio_and_speech(video: str, prompt: str, v2a_num_steps: int, text: str, audio_prompt: str, text_prompt: str, v2s_num_steps: int):
+def video_to_audio_and_speech(video: str, prompt: str, v2a_num_steps: int, text: str, audio_prompt: str, text_prompt: str, v2s_num_steps: int, v2a_loaded):
 
     video_path = tempfile.NamedTemporaryFile(delete=False, suffix='.mp4').name
     
@@ -118,7 +118,8 @@ class Predictor(BasePredictor):
     def setup(self) -> None:
         """Load the model into memory to make running multiple predictions efficient"""
         # self.model = torch.load("./weights.pth")
-        pass
+        download()
+        self.v2a_loaded = v2a_load()
 
     def predict(
         self,
@@ -138,6 +139,6 @@ class Predictor(BasePredictor):
         video = str(video) if video is not None else None
         audio_prompt = str(audio_prompt) if audio_prompt is not None else None
         
-        video_save_path, video_gen = video_to_audio_and_speech(video, prompt, v2a_num_steps, text, audio_prompt, text_prompt, v2s_num_steps)
+        video_save_path, video_gen = video_to_audio_and_speech(video, prompt, v2a_num_steps, text, audio_prompt, text_prompt, v2s_num_steps, self.v2a_loaded)
         return [CogPath(video_save_path), CogPath(video_gen)]
 
