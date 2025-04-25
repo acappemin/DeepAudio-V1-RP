@@ -2,6 +2,11 @@
 # https://cog.run/python
 
 
+import os
+
+os.system("cd ./F5-TTS && pip install -e .")
+
+
 import torch
 import torchaudio
 
@@ -12,8 +17,6 @@ import shutil
 import numpy as np
 
 from huggingface_hub import hf_hub_download
-
-import os
 
 
 if True:
@@ -41,9 +44,6 @@ if True:
     file_path = hf_hub_download(repo_id="lshzhm/DeepAudio-V1", filename="v2c_s44.pt", local_dir=model_path)
 
     print(f"Model saved at: {file_path}")
-
-
-os.system("cd ./F5-TTS && pip install -e .")
 
 
 import sys
