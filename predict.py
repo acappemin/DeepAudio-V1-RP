@@ -111,7 +111,7 @@ def video_to_audio_and_speech(video: str, prompt: str, v2a_num_steps: int, text:
     return video_save_path, video_gen
 
 
-from cog import BasePredictor, Input, Path
+from cog import BasePredictor, Input, Path as CogPath
 from typing import Optional
 
 
