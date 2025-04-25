@@ -112,6 +112,7 @@ def video_to_audio_and_speech(video: str, prompt: str, v2a_num_steps: int, text:
 
 
 from cog import BasePredictor, Input, Path
+from typing import Optional
 
 
 class Predictor(BasePredictor):
