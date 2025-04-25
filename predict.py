@@ -4,6 +4,9 @@
 
 import os
 
+os.system("cd ./F5-TTS && pip install -e .")
+
+
 import torch
 import torchaudio
 
@@ -43,17 +46,11 @@ def download():
     print(f"Model saved at: {file_path}")
 
 
-import haha
-
-
 import sys
 sys.path.insert(0, "./MMAudio/")
 from demo import v2a_load, v2a_infer
 
 #v2a_loaded = v2a_load()
-
-
-import wawa
 
 
 import sys
@@ -122,7 +119,6 @@ class Predictor(BasePredictor):
     def setup(self) -> None:
         """Load the model into memory to make running multiple predictions efficient"""
         # self.model = torch.load("./weights.pth")
-        os.system("cd ./F5-TTS && pip install -e .")
         download()
         self.v2a_loaded = v2a_load()
 
