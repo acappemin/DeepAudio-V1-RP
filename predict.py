@@ -40,10 +40,7 @@ if True:
     print(f"Model saved at: {file_path}")
 
 
-try:
-    import f5-tts
-except ImportError:
-    os.system("cd ./F5-TTS && pip install -e .")
+os.system("cd ./F5-TTS && pip install -e .")
 
 
 import sys
