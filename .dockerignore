@@ -15,6 +15,3 @@ __pycache__
 
 # Exclude Python virtual environment
 /venv
-
-# Explicitly allow F5-TTS directory
-!F5-TTS/
