@@ -55,10 +55,9 @@ from demo import v2a_load, v2a_infer
 
 import sys
 sys.path.insert(0, "./F5-TTS/src/")
-from f5_tts.infer.infer_cli_test import v2s_infer
 
 
-def video_to_audio_and_speech(video: str, prompt: str, v2a_num_steps: int, text: str, audio_prompt: str, text_prompt: str, v2s_num_steps: int, v2a_loaded):
+def video_to_audio_and_speech(video: str, prompt: str, v2a_num_steps: int, text: str, audio_prompt: str, text_prompt: str, v2s_num_steps: int, v2a_loaded, v2s_infer):
 
     video_path = tempfile.NamedTemporaryFile(delete=False, suffix='.mp4').name
     
@@ -121,6 +120,8 @@ class Predictor(BasePredictor):
         # self.model = torch.load("./weights.pth")
         download()
         self.v2a_loaded = v2a_load()
+        from f5_tts.infer.infer_cli_test import v2s_infer
+        self.v2s_infer = v2s_infer
 
     def predict(
         self,
@@ -140,6 +141,6 @@ class Predictor(BasePredictor):
         video = str(video) if video is not None else None
         audio_prompt = str(audio_prompt) if audio_prompt is not None else None
         
-        video_save_path, video_gen = video_to_audio_and_speech(video, prompt, v2a_num_steps, text, audio_prompt, text_prompt, v2s_num_steps, self.v2a_loaded)
+        video_save_path, video_gen = video_to_audio_and_speech(video, prompt, v2a_num_steps, text, audio_prompt, text_prompt, v2s_num_steps, self.v2a_loaded, self.v2s_infer)
         return [CogPath(video_save_path), CogPath(video_gen)]
 
