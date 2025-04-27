@@ -133,7 +133,7 @@ class Predictor(BasePredictor):
         audio_prompt: Optional[CogPath] = Input(description="Video-to-Speech Speech Prompt", default=None),
         text_prompt: str = Input(description="Video-to-Speech Speech Prompt Transcription", default=""),
         v2s_num_steps: int = Input(description="Video-to-Speech Num Steps", default=32),
-    ) -> [CogPath, CogPath]:
+    ) -> CogPath, CogPath:
         """Run a single prediction on the model"""
         # processed_input = preprocess(image)
         # output = self.model(processed_image, scale)
@@ -142,5 +142,5 @@ class Predictor(BasePredictor):
         audio_prompt = str(audio_prompt) if audio_prompt is not None else None
         
         video_save_path, video_gen = video_to_audio_and_speech(video, prompt, v2a_num_steps, text, audio_prompt, text_prompt, v2s_num_steps, self.v2a_loaded, self.v2s_infer)
-        return [CogPath(video_save_path), CogPath(video_gen)]
+        return CogPath(video_save_path), CogPath(video_gen)
 
