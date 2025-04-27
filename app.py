@@ -1,9 +1,9 @@
 import os
-try:
-    import torchaudio
-except ImportError:
-    os.system("cd ./F5-TTS; pip install -e .")
-os.system("pip install -U gradio")
+#try:
+#    import torchaudio
+#except ImportError:
+#    os.system("cd ./F5-TTS; pip install -e .")
+#os.system("pip install -U gradio")
 
 
 import spaces
@@ -163,5 +163,5 @@ video_to_audio_and_speech_tab = gr.Interface(
 
 
 if __name__ == "__main__":
-    gr.TabbedInterface([video_to_audio_and_speech_tab], ['Video-to-Audio-and-Speech']).queue(max_size=1).launch()
+    gr.TabbedInterface([video_to_audio_and_speech_tab], ['Video-to-Audio-and-Speech']).queue(max_size=1).launch(server_name='0.0.0.0', server_port=30458)
 

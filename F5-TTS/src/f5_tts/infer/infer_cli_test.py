@@ -215,7 +215,7 @@ from f5_tts.model import DiT, UNetT
 #    default="",
 #)
 
-args = parser.parse_args()
+#args = parser.parse_args()
 
 
 from types import SimpleNamespace
