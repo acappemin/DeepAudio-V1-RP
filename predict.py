@@ -4,7 +4,7 @@
 
 import os
 
-os.system("cd ./F5-TTS && pip install -e .")
+#os.system("cd ./F5-TTS && pip install -e .")
 
 
 import torch

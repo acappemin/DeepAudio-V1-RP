@@ -20,8 +20,8 @@ build:
   # run:
   #   - "echo env is ready!"
   #   - "echo another command if needed"
-  #run:
-  #  - cd ./F5-TTS && pip install -e .
+  run:
+    - cd ./F5-TTS && pip install -e .
 
 # predict.py defines how predictions are run on your model
 predict: "predict.py:Predictor"
