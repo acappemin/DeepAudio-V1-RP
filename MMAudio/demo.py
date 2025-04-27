@@ -32,34 +32,50 @@ log = logging.getLogger()
 def v2a_load():
     setup_eval_logging()
 
-    parser = ArgumentParser()
-    parser.add_argument('--variant',
-                        type=str,
-                        #default='large_44k',
-                        #default='small_16k',
-                        #default='medium_44k',
-                        default='small_44k',
-                        help='small_16k, small_44k, medium_44k, large_44k, large_44k_v2')
-    parser.add_argument('--video', type=Path, help='Path to the video file')
-    parser.add_argument('--prompt', type=str, help='Input prompt', default='')
-    parser.add_argument('--negative_prompt', type=str, help='Negative prompt', default='')
-    parser.add_argument('--duration', type=float, default=8.0)
-    parser.add_argument('--cfg_strength', type=float, default=4.5)
-    parser.add_argument('--num_steps', type=int, default=25)
-    
-    parser.add_argument('--start', type=int, default=0)
-    parser.add_argument('--end', type=int, default=99999999)
-    parser.add_argument('--scp', type=str, help='video list', default='/ailab-train/speech/zhanghaomin/datas/v2cdata/tmp.scp')
-    parser.add_argument('--calc_energy', type=int, default=0)
+    #parser = ArgumentParser()
+    #parser.add_argument('--variant',
+    #                    type=str,
+    #                    #default='large_44k',
+    #                    #default='small_16k',
+    #                    #default='medium_44k',
+    #                    default='small_44k',
+    #                    help='small_16k, small_44k, medium_44k, large_44k, large_44k_v2')
+    #parser.add_argument('--video', type=Path, help='Path to the video file')
+    #parser.add_argument('--prompt', type=str, help='Input prompt', default='')
+    #parser.add_argument('--negative_prompt', type=str, help='Negative prompt', default='')
+    #parser.add_argument('--duration', type=float, default=8.0)
+    #parser.add_argument('--cfg_strength', type=float, default=4.5)
+    #parser.add_argument('--num_steps', type=int, default=25)
+    #
+    #parser.add_argument('--start', type=int, default=0)
+    #parser.add_argument('--end', type=int, default=99999999)
+    #parser.add_argument('--scp', type=str, help='video list', default='/ailab-train/speech/zhanghaomin/datas/v2cdata/tmp.scp')
+    #parser.add_argument('--calc_energy', type=int, default=1)
 
-    parser.add_argument('--mask_away_clip', action='store_true')
+    #parser.add_argument('--mask_away_clip', action='store_true')
 
-    parser.add_argument('--output', type=Path, help='Output directory', default='./output')
-    parser.add_argument('--seed', type=int, help='Random seed', default=42)
-    parser.add_argument('--skip_video_composite', action='store_true')
-    parser.add_argument('--full_precision', action='store_true')
+    #parser.add_argument('--output', type=Path, help='Output directory', default='./output')
+    #parser.add_argument('--seed', type=int, help='Random seed', default=42)
+    #parser.add_argument('--skip_video_composite', action='store_true')
+    #parser.add_argument('--full_precision', action='store_true')
 
-    args = parser.parse_args()
+    #args = parser.parse_args()
+
+
+    from types import SimpleNamespace
+    args = SimpleNamespace()
+    args.variant = 'small_44k'
+    args.seed = 42
+    args.duration = 8.0
+    args.cfg_strength = 4.5
+    args.skip_video_composite = False
+    args.full_precision = False
+    args.mask_away_clip = False
+    args.scp = ""
+    args.start = 0
+    args.end = 0
+    args.calc_energy = 1
+
 
     if args.variant not in all_model_cfg:
         raise ValueError(f'Unknown model variant: {args.variant}')
