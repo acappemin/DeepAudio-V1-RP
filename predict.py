@@ -67,7 +67,7 @@ def video_to_audio_and_speech(video: str, prompt: str, v2a_num_steps: int, text:
     video_save_path = str(output_dir) + "/" + str(video_path).replace("/", "__").strip(".") + ".mp4"
     
     print("paths", video, video_path, output_dir, video_save_path)
-    print("paths", audio_prompt, audio_p_path, audio_prompt[1].shape, audio_prompt[1].max(), audio_prompt[1].min(), type(audio_prompt[1]))
+    print("paths", audio_prompt, audio_p_path)
 
     if video.startswith("http"):
         data = requests.get(video, timeout=60).content
