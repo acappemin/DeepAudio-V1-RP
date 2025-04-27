@@ -35,187 +35,221 @@ from f5_tts.infer.utils_infer import (
 from f5_tts.model import DiT, UNetT
 
 
-parser = argparse.ArgumentParser(
-    prog="python3 infer-cli.py",
-    description="Commandline interface for E2/F5 TTS with Advanced Batch Processing.",
-    epilog="Specify options above to override one or more settings from config.",
-)
-parser.add_argument(
-    "-c",
-    "--config",
-    type=str,
-    default=os.path.join(files("f5_tts").joinpath("infer/examples/basic"), "basic.toml"),
-    help="The configuration file, default see infer/examples/basic/basic.toml",
-)
+#parser = argparse.ArgumentParser(
+#    prog="python3 infer-cli.py",
+#    description="Commandline interface for E2/F5 TTS with Advanced Batch Processing.",
+#    epilog="Specify options above to override one or more settings from config.",
+#)
+#parser.add_argument(
+#    "-c",
+#    "--config",
+#    type=str,
+#    default=os.path.join(files("f5_tts").joinpath("infer/examples/basic"), "basic.toml"),
+#    help="The configuration file, default see infer/examples/basic/basic.toml",
+#)
 
 
 # Note. Not to provide default value here in order to read default from config file
 
-parser.add_argument(
-    "-m",
-    "--model",
-    type=str,
-    help="The model name: F5-TTS | E2-TTS",
-)
-parser.add_argument(
-    "-mc",
-    "--model_cfg",
-    type=str,
-    help="The path to F5-TTS model config file .yaml",
-)
-parser.add_argument(
-    "-p",
-    "--ckpt_file",
-    type=str,
-    help="The path to model checkpoint .pt, leave blank to use default",
-    default="./F5-TTS/ckpts/v2c/v2c_s44.pt",
-)
-parser.add_argument(
-    "-v",
-    "--vocab_file",
-    type=str,
-    help="The path to vocab file .txt, leave blank to use default",
-)
-parser.add_argument(
-    "-r",
-    "--ref_audio",
-    type=str,
-    help="The reference audio file.",
-)
-parser.add_argument(
-    "-s",
-    "--ref_text",
-    type=str,
-    help="The transcript/subtitle for the reference audio",
-)
-parser.add_argument(
-    "-t",
-    "--gen_text",
-    type=str,
-    help="The text to make model synthesize a speech",
-)
-parser.add_argument(
-    "-f",
-    "--gen_file",
-    type=str,
-    help="The file with text to generate, will ignore --gen_text",
-)
-parser.add_argument(
-    "-o",
-    "--output_dir",
-    type=str,
-    help="The path to output folder",
-)
-parser.add_argument(
-    "-w",
-    "--output_file",
-    type=str,
-    help="The name of output file",
-)
-parser.add_argument(
-    "--save_chunk",
-    action="store_true",
-    help="To save each audio chunks during inference",
-)
-parser.add_argument(
-    "--remove_silence",
-    action="store_true",
-    help="To remove long silence found in ouput",
-)
-parser.add_argument(
-    "--load_vocoder_from_local",
-    action="store_true",
-    help="To load vocoder from local dir, default to ../checkpoints/vocos-mel-24khz",
-)
-parser.add_argument(
-    "--vocoder_name",
-    type=str,
-    choices=["vocos", "bigvgan"],
-    help=f"Used vocoder name: vocos | bigvgan, default {mel_spec_type}",
-)
-parser.add_argument(
-    "--target_rms",
-    type=float,
-    help=f"Target output speech loudness normalization value, default {target_rms}",
-)
-parser.add_argument(
-    "--cross_fade_duration",
-    type=float,
-    help=f"Duration of cross-fade between audio segments in seconds, default {cross_fade_duration}",
-)
+#parser.add_argument(
+#    "-m",
+#    "--model",
+#    type=str,
+#    help="The model name: F5-TTS | E2-TTS",
+#)
+#parser.add_argument(
+#    "-mc",
+#    "--model_cfg",
+#    type=str,
+#    help="The path to F5-TTS model config file .yaml",
+#)
+#parser.add_argument(
+#    "-p",
+#    "--ckpt_file",
+#    type=str,
+#    help="The path to model checkpoint .pt, leave blank to use default",
+#    default="./F5-TTS/ckpts/v2c/v2c_s44.pt",
+#)
+#parser.add_argument(
+#    "-v",
+#    "--vocab_file",
+#    type=str,
+#    help="The path to vocab file .txt, leave blank to use default",
+#)
+#parser.add_argument(
+#    "-r",
+#    "--ref_audio",
+#    type=str,
+#    help="The reference audio file.",
+#)
+#parser.add_argument(
+#    "-s",
+#    "--ref_text",
+#    type=str,
+#    help="The transcript/subtitle for the reference audio",
+#)
+#parser.add_argument(
+#    "-t",
+#    "--gen_text",
+#    type=str,
+#    help="The text to make model synthesize a speech",
+#)
+#parser.add_argument(
+#    "-f",
+#    "--gen_file",
+#    type=str,
+#    help="The file with text to generate, will ignore --gen_text",
+#)
+#parser.add_argument(
+#    "-o",
+#    "--output_dir",
+#    type=str,
+#    help="The path to output folder",
+#)
+#parser.add_argument(
+#    "-w",
+#    "--output_file",
+#    type=str,
+#    help="The name of output file",
+#)
+#parser.add_argument(
+#    "--save_chunk",
+#    action="store_true",
+#    help="To save each audio chunks during inference",
+#)
+#parser.add_argument(
+#    "--remove_silence",
+#    action="store_true",
+#    help="To remove long silence found in ouput",
+#)
+#parser.add_argument(
+#    "--load_vocoder_from_local",
+#    action="store_true",
+#    help="To load vocoder from local dir, default to ../checkpoints/vocos-mel-24khz",
+#)
+#parser.add_argument(
+#    "--vocoder_name",
+#    type=str,
+#    choices=["vocos", "bigvgan"],
+#    help=f"Used vocoder name: vocos | bigvgan, default {mel_spec_type}",
+#)
+#parser.add_argument(
+#    "--target_rms",
+#    type=float,
+#    help=f"Target output speech loudness normalization value, default {target_rms}",
+#)
+#parser.add_argument(
+#    "--cross_fade_duration",
+#    type=float,
+#    help=f"Duration of cross-fade between audio segments in seconds, default {cross_fade_duration}",
+#)
 #parser.add_argument(
 #    "--nfe_step",
 #    type=int,
 #    help=f"The number of function evaluation (denoising steps), default {nfe_step}",
 #)
-parser.add_argument(
-    "--cfg_strength",
-    type=float,
-    help=f"Classifier-free guidance strength, default {cfg_strength}",
-)
-parser.add_argument(
-    "--sway_sampling_coef",
-    type=float,
-    help=f"Sway Sampling coefficient, default {sway_sampling_coef}",
-)
-parser.add_argument(
-    "--speed",
-    type=float,
-    help=f"The speed of the generated audio, default {speed}",
-)
-parser.add_argument(
-    "--fix_duration",
-    type=float,
-    help=f"Fix the total duration (ref and gen audios) in seconds, default {fix_duration}",
-)
+#parser.add_argument(
+#    "--cfg_strength",
+#    type=float,
+#    help=f"Classifier-free guidance strength, default {cfg_strength}",
+#)
+#parser.add_argument(
+#    "--sway_sampling_coef",
+#    type=float,
+#    help=f"Sway Sampling coefficient, default {sway_sampling_coef}",
+#)
+#parser.add_argument(
+#    "--speed",
+#    type=float,
+#    help=f"The speed of the generated audio, default {speed}",
+#)
+#parser.add_argument(
+#    "--fix_duration",
+#    type=float,
+#    help=f"Fix the total duration (ref and gen audios) in seconds, default {fix_duration}",
+#)
 
-parser.add_argument(
-    "--start",
-    type=int,
-    default=0,
-)
-parser.add_argument(
-    "--end",
-    type=int,
-    default=1,
-)
-parser.add_argument(
-    "--v2a_path",
-    type=str,
-    default="",
-)
-parser.add_argument(
-    "--infer_list",
-    type=str,
-    default="",
-)
-parser.add_argument(
-    "--wav_p",
-    type=str,
-    default="",
-)
-parser.add_argument(
-    "--txt_p",
-    type=str,
-    default="",
-)
-parser.add_argument(
-    "--video",
-    type=str,
-    default="",
-)
-parser.add_argument(
-    "--v2a_wav",
-    type=str,
-    default="",
-)
-parser.add_argument(
-    "--txt",
-    type=str,
-    default="",
-)
+#parser.add_argument(
+#    "--start",
+#    type=int,
+#    default=0,
+#)
+#parser.add_argument(
+#    "--end",
+#    type=int,
+#    default=1,
+#)
+#parser.add_argument(
+#    "--v2a_path",
+#    type=str,
+#    default="",
+#)
+#parser.add_argument(
+#    "--infer_list",
+#    type=str,
+#    default="",
+#)
+#parser.add_argument(
+#    "--wav_p",
+#    type=str,
+#    default="",
+#)
+#parser.add_argument(
+#    "--txt_p",
+#    type=str,
+#    default="",
+#)
+#parser.add_argument(
+#    "--video",
+#    type=str,
+#    default="",
+#)
+#parser.add_argument(
+#    "--v2a_wav",
+#    type=str,
+#    default="",
+#)
+#parser.add_argument(
+#    "--txt",
+#    type=str,
+#    default="",
+#)
 
 args = parser.parse_args()
+
+
+from types import SimpleNamespace
+args = SimpleNamespace()
+args.config = os.path.join(files("f5_tts").joinpath("infer/examples/basic"), "basic.toml")
+args.model = None
+args.model_cfg = None
+args.ckpt_file = "./F5-TTS/ckpts/v2c/v2c_s44.pt"
+args.vocab_file = None
+args.ref_audio = None
+args.ref_text = None
+args.gen_text = None
+args.gen_file = None
+args.output_dir = None
+args.output_file = None
+args.save_chunk = False
+args.remove_silence = False
+args.load_vocoder_from_local = False
+args.vocoder_name = None
+args.target_rms = None
+args.cross_fade_duration = None
+args.cfg_strength = None
+args.sway_sampling_coef = None
+args.speed = None
+args.fix_duration = None
+args.start = 0
+args.end = 1
+args.v2a_path = ""
+args.infer_list = ""
+args.wav_p = ""
+args.txt_p = ""
+args.video = ""
+args.v2a_wav = ""
+args.txt = ""
 
 
 # config file
